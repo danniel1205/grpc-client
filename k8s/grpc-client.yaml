@@ -1,0 +1,25 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-client
+  labels:
+    app: grpc-client
+spec:
+  selector:
+    matchLabels:
+      app: grpc-client
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: grpc-client
+    spec:
+      containers:
+        - command:
+            - /grpc-client
+          args:
+            - --server_addr=grpc-service.default.svc.cluster.local:12500
+          image: danielguo/grpc-client:latest
+          imagePullPolicy: IfNotPresent
+          name: grpc-client
